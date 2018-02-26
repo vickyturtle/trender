@@ -11,6 +11,7 @@ buildscript {
         timberVersion = "4.6.1"
         rxAndroidVersion = "2.0.2"
         constraintLayoutVersion = "1.0.2"
+        glideVersion = "4.6.1"
     }
 
 
