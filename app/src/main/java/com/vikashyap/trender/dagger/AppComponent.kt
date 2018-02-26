@@ -12,7 +12,8 @@ import javax.inject.Singleton
  * Created by vikas on 26/02/18.
  */
 @Singleton
-@Component(modules = [AppModule::class, ActivityBindingModule::class, AndroidSupportInjectionModule::class])
+@Component(modules = [AppModule::class, ActivityBindingModule::class, AndroidSupportInjectionModule::class,
+	NetModule::class])
 interface AppComponent : AndroidInjector<TrenderApp> {
 
 	@Component.Builder

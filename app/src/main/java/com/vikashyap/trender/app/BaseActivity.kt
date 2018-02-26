@@ -11,7 +11,7 @@ import javax.inject.Inject
 /**
  * Created by vikas on 26/02/18.
  */
-abstract class BaseActivity<in S : Scene, T : Presenter<S>> : AppCompatActivity(), Scene {
+abstract class BaseActivity<S : Scene, T : Presenter<S>> : AppCompatActivity(), Scene {
 
 	@Inject
 	protected lateinit var presenter: T
@@ -26,4 +26,16 @@ abstract class BaseActivity<in S : Scene, T : Presenter<S>> : AppCompatActivity(
 		AndroidInjection.inject(this)
 		super.onCreate(savedInstanceState)
 	}
+
+	override fun onStart() {
+		super.onStart()
+		presenter.onSceneAdded(getScene())
+	}
+
+	override fun onStop() {
+		super.onStop()
+		presenter.onSceneRemoved()
+	}
+
+	abstract fun getScene(): S
 }

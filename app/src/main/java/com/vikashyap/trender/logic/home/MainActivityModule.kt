@@ -1,10 +1,17 @@
 package com.vikashyap.trender.logic.home
 
+import com.vikashyap.trender.core.home.MainPresenter
+import com.vikashyap.trender.dagger.PerActivity
+import dagger.Binds
 import dagger.Module
 
 /**
  * Created by vikas on 26/02/18.
  */
 @Module
-class MainActivityModule {
+abstract class MainActivityModule {
+
+	@PerActivity
+	@Binds
+	abstract fun mainPresenter(mainPresenter: MainPresenterImpl): MainPresenter
 }
