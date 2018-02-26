@@ -1,6 +1,7 @@
 package com.vikashyap.trender.logic
 
 import com.vikashyap.trender.core.models.Repository
+import io.reactivex.Flowable
 import io.reactivex.Single
 import io.reactivex.processors.BehaviorProcessor
 import javax.inject.Inject
@@ -27,5 +28,12 @@ class RepositoryManager @Inject public constructor(private val trenderApi: Trend
 		} else {
 			repositoryProcessor.take(1).singleOrError()
 		}
+	}
+
+	public fun findRepoById(id: Long): Single<Repository> {
+		return repositoryProcessor.take(1)
+				.flatMap { Flowable.fromIterable(it) }
+				.filter { it.id == id }
+				.firstOrError()
 	}
 }

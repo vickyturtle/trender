@@ -4,9 +4,12 @@ import android.app.Application
 import com.vikashyap.trender.R
 import com.vikashyap.trender.core.home.MainPresenter
 import com.vikashyap.trender.core.home.MainScene
+import com.vikashyap.trender.core.models.Repository
 import com.vikashyap.trender.logic.BasePresenterImpl
 import com.vikashyap.trender.logic.RepositoryManager
 import com.vikashyap.trender.logic.SchedulerProvider
+import com.vikashyap.trender.logic.details.getDetailsExtras
+import io.reactivex.disposables.Disposable
 import retrofit2.HttpException
 import timber.log.Timber
 import java.io.IOException
@@ -20,9 +23,22 @@ class MainPresenterImpl @Inject public constructor(private val repositoryManager
                                                    private val application: Application) :
 		BasePresenterImpl<MainScene>(), MainPresenter {
 
+	private var repoDisposable: Disposable? = null
+
+	override fun onRefreshClicked() {
+		fetchRepositories(true)
+	}
+
 	override fun onSceneAdded(s: MainScene) {
 		super.onSceneAdded(s)
-		repositoryManager.getRepositories(false)
+		fetchRepositories(false)
+	}
+
+	private fun fetchRepositories(refresh: Boolean) {
+		if (repoDisposable != null && !repoDisposable!!.isDisposed) {
+			repoDisposable?.dispose()
+		}
+		repoDisposable = repositoryManager.getRepositories(refresh)
 				.subscribeOn(schedulerProvider.getIoScheduler())
 				.observeOn(schedulerProvider.getUiScheduler())
 				.subscribe({ t ->
@@ -39,6 +55,19 @@ class MainPresenterImpl @Inject public constructor(private val repositoryManager
 			is IOException -> application.getString(R.string.error_internet)
 			else -> application.getString(R.string.error_unknown)
 
+		}
+	}
+
+	override fun onSceneRemoved() {
+		super.onSceneRemoved()
+		if (!repoDisposable!!.isDisposed) {
+			repoDisposable?.dispose()
+		}
+	}
+
+	override fun onItemClicked(repository: Repository?) {
+		if (repository != null) {
+			scene?.showDetails(getDetailsExtras(repository.id))
 		}
 	}
 }

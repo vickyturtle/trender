@@ -14,7 +14,8 @@ fun toUser(owner: TOwner): User {
 	return user
 }
 
-public fun toRepository(tRepository: TRepository): Repository = Repository(tRepository.name,
+public fun toRepository(tRepository: TRepository): Repository = Repository(tRepository.id,
+		tRepository.name,
 		tRepository.fullName,
 		toUser(tRepository.owner),
 		tRepository.url,
@@ -22,4 +23,7 @@ public fun toRepository(tRepository: TRepository): Repository = Repository(tRepo
 		tRepository.size,
 		tRepository.stargazersCount,
 		tRepository.watchersCount,
+		tRepository.watchersCount,
+		tRepository.forksCount,
+		tRepository.language,
 		tRepository.score)

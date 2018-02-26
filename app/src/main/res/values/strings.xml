@@ -4,4 +4,6 @@
     <string name="error_internet">Oops, Looks like you are not connected to the internet!</string>
     <string name="error_unknown">Some unknown error occurred, please try again!</string>
     <string name="fetching_repository">Getting you the most popular repositories of Android</string>
+    <string name="details_title">Repository Details</string>
+    <string name="details_text">Stars : %1$d \nForks : %2$d \nWatchers : %3$d \nIssues : %4$d \nLanguage : %5$s</string>
 </resources>

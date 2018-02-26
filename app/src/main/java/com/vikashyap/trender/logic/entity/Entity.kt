@@ -8,7 +8,8 @@ data class TOwner(val login: String,
                   val type: String,
                   val id: Long)
 
-data class TRepository(val name: String,
+data class TRepository(val id: Long,
+                       val name: String,
                        val fullName: String,
                        val owner: TOwner,
                        val url: String,
@@ -16,6 +17,9 @@ data class TRepository(val name: String,
                        val size: Long,
                        val stargazersCount: Long,
                        val watchersCount: Long,
+                       val forksCount: Long,
+                       val openIssuesCount: Long,
+                       val language: String?,
                        val score: Float)
 
 data class TResponse(val totalCount: Int,
